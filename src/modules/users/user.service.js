@@ -33,6 +33,12 @@ const loginUser = async (email, password) => {
   return { user, token };
 };
 
+const getMe = async (userId) => {
+  const user = await userRepository.findById(userId);
+  if (!user) throw createError('User not found', 404);
+  return user;
+};
+
 const getUserById = async (targetId, requesterId, requesterRole) => {
   if (targetId !== requesterId && requesterRole !== 'admin') {
     throw createError('Access denied', 403);
@@ -58,4 +64,4 @@ const blockUser = async (targetId, requesterId, requesterRole) => {
   return userRepository.updateById(targetId, { isActive: false });
 };
 
-module.exports = { registerUser, loginUser, getUserById, getAllUsers, blockUser };
+module.exports = { registerUser, loginUser, getMe, getUserById, getAllUsers, blockUser };

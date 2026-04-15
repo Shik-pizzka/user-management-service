@@ -15,6 +15,7 @@ const forceUserRole = (req, res, next) => {
 router.post('/register', forceUserRole, registerRules, validate, controller.register);
 router.post('/login', loginRules, validate, controller.login);
 
+router.get('/me', authenticate, controller.getMe);
 router.get('/', authenticate, authorizeRoles('admin'), controller.getAllUsers);
 router.get('/:id', authenticate, controller.getUserById);
 router.patch('/:id/block', authenticate, controller.blockUser);

@@ -1,6 +1,5 @@
 const userService = require('./user.service');
 
-// убираем пароль из ответа на всякий случай, хотя select: false в схеме уже это делает
 const sanitizeUser = (user) => {
   const obj = user.toObject ? user.toObject() : { ...user };
   delete obj.password;
@@ -21,6 +20,15 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     const { user, token } = await userService.loginUser(email, password);
     res.status(200).json({ success: true, token, data: sanitizeUser(user) });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getMe = async (req, res, next) => {
+  try {
+    const user = await userService.getMe(req.user.id);
+    res.status(200).json({ success: true, data: sanitizeUser(user) });
   } catch (err) {
     next(err);
   }
@@ -53,4 +61,4 @@ const blockUser = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login, getUserById, getAllUsers, blockUser };
+module.exports = { register, login, getMe, getUserById, getAllUsers, blockUser };

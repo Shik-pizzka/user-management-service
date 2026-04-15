@@ -25,7 +25,7 @@ npm run dev
 ```
 PORT=3000
 MONGODB_URI=mongodb://localhost:27017/user-management
-JWT_SECRET=<длинная случайная строка>
+JWT_SECRET=<длинная случайная строка> через bcryptjs
 JWT_EXPIRES_IN=7d
 ```
 
@@ -59,9 +59,9 @@ POST /api/users/register
 Content-Type: application/json
 
 {
-  "fullName": "Иван Иванов",
-  "dateOfBirth": "1995-06-15",
-  "email": "ivan@example.com",
+  "fullName": "Федотов Никита",
+  "dateOfBirth": "2001-07-12",
+  "email": "nikita@example.com",
   "password": "password123"
 }
 ```
